@@ -1,29 +1,34 @@
 
 BOX_NS = turbulent
 BOX_NAME = substance-box
-BOX_VERSION = 0.5
+BOX_VERSION = 0.6
+
+BINTRAY_USERNAME = turbulent-oss
+
+PACKER=packer
+CURL=curl
 
 define BOXYML
 name: $(BOX_NAME)
 version: $(BOX_VERSION)
 description: Substance Box base image
-registry: http://bbeausej.developers.turbulent.ca/$(BOX_NS)/$(BOX_NAME)-$(BOX_VERSION).json
 endef
 export BOXYML
 
-all: build/substance-base/substance-base-disk1.vmdk build/$(BOX_NAME)/substance-disk1.vmdk build/$(BOX_NAME)-$(BOX_VERSION).json export
+.PHONY: all
+all: build/substance-base/substance-base-disk1.vmdk build/$(BOX_NAME)/substance-disk1.vmdk build/$(BOX_NAME)-$(BOX_VERSION).json
 
 build/substance-base/substance-base-disk1.vmdk: substance-base.packer.json
 	@echo ""
 	@echo "===> Building substance-base image with preseed"
 	@echo ""
-	packer build -force $< 
+	$(PACKER) build -force $< 
 
 build/$(BOX_NAME)/substance-disk1.vmdk: $(BOX_NAME).packer.json
 	@echo ""
 	@echo "===> Building $(BOX_NAME) image with salt"
 	@echo ""
-	packer build -force $<
+	$(PACKER) build -force $<
 
 build/$(BOX_NAME)-$(BOX_VERSION).box: build/$(BOX_NAME)/substance-disk1.vmdk
 	@echo ""
@@ -49,11 +54,13 @@ build/$(BOX_NAME)-$(BOX_VERSION).json: support/boxjson.m4 build/$(BOX_NAME)-$(BO
 		-DBOX_SHA="$(BOX_SHA)" \
 		support/boxjson.m4 > build/substance-box-$(BOX_VERSION).json
   
+.PHONY: upload
 upload:
-	scp build/$(BOX_NAME)-$(BOX_VERSION).box developers:substance-registry/box/$(BOX_NS)/$(BOX_NAME)-$(BOX_VERSION).box
-	scp build/$(BOX_NAME)-$(BOX_VERSION).json developers:substance-registry/box/$(BOX_NS)/$(BOX_NAME)-$(BOX_VERSION).json
+	$(CURL) -T build/$(BOX_NAME)-$(BOX_VERSION).box -u$(BINTRAY_USERNAME):$(BINTRAY_APIKEY) 'https://api.bintray.com/content/turbulent/substance-images/$(BOX_NAME)/$(BOX_VERSION)/$(BOX_NS)/$(BOX_NAME)/$(BOX_VERSION).box?box_provider=virtualbox'
+	$(CURL) -T build/$(BOX_NAME)-$(BOX_VERSION).json -u$(BINTRAY_USERNAME):$(BINTRAY_APIKEY) 'https://api.bintray.com/content/turbulent/substance-images/$(BOX_NAME)/$(BOX_VERSION)/$(BOX_NS)/$(BOX_NAME)/$(BOX_VERSION).json?box_provider=virtualbox'
 
+
+.PHONY: clean
 clean:
 	rm -rf build/*
 
-.PHONY: all  export clean
