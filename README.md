@@ -14,6 +14,9 @@ box version. For example, to generate version 1.16:
 
 `> make BOX_VERSION=1.16`
 
+These scripts were tested on Packer version 0.12 on Mac OS X, but they *should*
+work on newer versions as well.
+
 ## How to upload new images on Bintray
 
 To upload new images on Bintray, you need and API key. Once you have that, use
@@ -25,4 +28,9 @@ a new revision of the substance box as version 1.16:
 After the upload is done, you must log into Bintray and go to the
 `substance-images` repository to publish the artifacts that were just
 uploaded. It takes a few minutes for publication to occur, so be patient!
+
+## License
+
+All work found under this repository is licensed under the [Apache
+License 2.0](LICENSE).
 
