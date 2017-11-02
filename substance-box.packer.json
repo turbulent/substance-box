@@ -23,6 +23,7 @@
     "ssh_pty": true,
 
     "shutdown_command": "/sbin/poweroff",
+    "post_shutdown_delay": "20s",
     "guest_additions_mode": "disable"
 
   }],
