@@ -1,49 +1,42 @@
 {
   "variables": {
-    "ssh_name": "packer",
-    "ssh_pass": "packer",
-    "hostname": "susbtance"
+    "hostname": "susbtance-box"
   },
   "builders": [{
     "type": "virtualbox-ovf",
-    "vm_name": "substance",
+    "name": "substance-box",
+    "vm_name": "substance-box",
     "output_directory": "build/substance-box",
+    "virtualbox_version_file": ".vbox_version",
+
+    "headless": false,
 
     "source_path": "build/substance-base/substance-base.ovf",
-     
+    
     "http_directory" : "support",
     "http_port_min" : 10000,
     "http_port_max" : 20000,
 
-    "ssh_username": "{{user `ssh_name`}}",
-    "ssh_password": "{{user `ssh_pass`}}",
+    "ssh_username": "root",
+    "ssh_password": "substance",
     "ssh_wait_timeout": "20m",
     "ssh_pty": true,
 
-    "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+    "shutdown_command": "/sbin/poweroff",
+    "guest_additions_mode": "disable"
 
-    "guest_additions_mode": "disable",
-    "vboxmanage": [
-      ["modifyvm", "{{.Name}}", "--nic2", "nat"]
-    ]
   }],
+  "provisioners": [{  
+    "type": "shell",
+    "scripts": [
+      "scripts/alpine/apk.sh",
+      "scripts/alpine/packages.sh",
+      "scripts/alpine/docker.sh",
+      "scripts/alpine/substance.sh", 
+      "scripts/alpine/unison.sh", 
+      "scripts/alpine/compress.sh"
+    ],
 
-  "provisioners": [ 
-    {
-      "type": "salt-masterless",
-      "local_state_tree": "./salt/salt",
-      "local_pillar_roots": "./salt/pillar",
-      "minion_config": "./salt/minion",
-      "log_level": "debug",
-      "skip_bootstrap": true
-    },
-    {
-      "type": "shell",
-      "scripts": [ 
-        "scripts/cleanup.sh",
-        "scripts/compress.sh" 
-       ],
-      "execute_command": " echo {{user `ssh_pass`}} | {{.Vars}} sudo -S -E bash '{{.Path}}'"
-    }
-  ]
+    "execute_command": "/bin/sh '{{.Path}}'"
+  }]
 }
