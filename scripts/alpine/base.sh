@@ -4,6 +4,15 @@ hwclock -s
 apk upgrade -U --available
 apk add sudo
 
+# Clear bopot timeout
+sed -i "s/^TIMEOUT 30/TIMEOUT 1/" /boot/extlinux.conf
+
+# No DNS for hoif
+mkdir -p /etc/udhcpc
+echo << EODHCP > /etc/udhcpc/udhcpc.conf
+NO_DNS="eth1"
+EODHCP
+
 source /etc/os-release
 
 cat << EOF > /etc/motd
@@ -20,4 +29,3 @@ Built with Alpine for use with substance.
   <https://github.com/turbulent/substance>
 
 EOF
-

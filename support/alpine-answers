@@ -3,11 +3,11 @@ HOSTNAMEOPTS="-n substance-box"
 INTERFACESOPTS="auto lo
 iface lo inet loopback
 
-auto eth1
-iface eth1 inet dhcp
-
 auto eth0
 iface eth0 inet dhcp
+
+auto eth1
+iface eth1 inet dhcp
 "
 DNSOPTS="-d local -n 8.8.8.8 8.8.4.4"
 TIMEZONEOPTS="-z UTC"
