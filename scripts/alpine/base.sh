@@ -9,7 +9,7 @@ sed -i "s/^TIMEOUT 30/TIMEOUT 1/" /boot/extlinux.conf
 
 # No DNS for hoif
 mkdir -p /etc/udhcpc
-echo << EODHCP > /etc/udhcpc/udhcpc.conf
+cat << EODHCP > /etc/udhcpc/udhcpc.conf
 NO_DNS="eth1"
 EODHCP
 
