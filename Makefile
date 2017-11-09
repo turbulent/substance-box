@@ -1,7 +1,7 @@
 
 BOX_NS = turbulent
 BOX_NAME = substance-box
-BOX_VERSION = 0.6
+BOX_VERSION = 0.7
 
 BINTRAY_USERNAME = turbulent-oss
 
@@ -16,28 +16,28 @@ endef
 export BOXYML
 
 .PHONY: all
-all: build/substance-base/substance-base-disk1.vmdk build/$(BOX_NAME)/substance-disk1.vmdk build/$(BOX_NAME)-$(BOX_VERSION).json
+all: build/substance-base/substance-base-disk001.vmdk build/$(BOX_NAME)/substance-box-disk001.vmdk build/$(BOX_NAME)-$(BOX_VERSION).json
 
-build/substance-base/substance-base-disk1.vmdk: substance-base.packer.json
+build/substance-base/substance-base-disk001.vmdk: substance-base.packer.json
 	@echo ""
-	@echo "===> Building substance-base image with preseed"
+	@echo "===> Building $(BOX_NAME) image"
 	@echo ""
-	$(PACKER) build -force $< 
+	$(PACKER) build $<
 
-build/$(BOX_NAME)/substance-disk1.vmdk: $(BOX_NAME).packer.json
+build/$(BOX_NAME)/substance-box-disk001.vmdk: $(BOX_NAME).packer.json
 	@echo ""
-	@echo "===> Building $(BOX_NAME) image with salt"
+	@echo "===> Building $(BOX_NAME) image"
 	@echo ""
-	$(PACKER) build -force $<
+	$(PACKER) build $<
 
-build/$(BOX_NAME)-$(BOX_VERSION).box: build/$(BOX_NAME)/substance-disk1.vmdk
+build/$(BOX_NAME)-$(BOX_VERSION).box: build/$(BOX_NAME)/substance-box-disk001.vmdk
 	@echo ""
 	@echo "Producing box artifact $(BOX_NAME)-$(BOX_VERSION).box"
 	@echo ""
 	@echo "$$BOXYML" > build/box.yml
-	@cp build/$(BOX_NAME)/substance.ovf build/box.ovf
-	@cp build/$(BOX_NAME)/substance-disk1.vmdk build/box-disk1.vmdk
-	@sed -i '.bak' 's/substance-disk1.vmdk/box-disk1.vmdk/g' build/box.ovf
+	@cp build/$(BOX_NAME)/substance-box.ovf build/box.ovf
+	@cp build/$(BOX_NAME)/substance-box-disk001.vmdk build/box-disk1.vmdk
+	@sed -i '.bak' 's/substance-box-disk001.vmdk/box-disk1.vmdk/g' build/box.ovf
 	@cd build && \
 		tar cvzf $(BOX_NAME)-$(BOX_VERSION).box box.yml box.ovf box-disk1.vmdk && \
 	  cd -

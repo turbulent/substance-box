@@ -1,7 +1,5 @@
 {
   "variables": {
-    "ssh_name": "packer",
-    "ssh_pass": "packer",
     "hostname": "susbtance-base"
   },
   "builders": [{
@@ -9,8 +7,11 @@
     "name": "substance-base",
     "vm_name": "substance-base",
     "output_directory": "build/substance-base",
+    "virtualbox_version_file": ".vbox_version",
 
-    "guest_os_type": "Ubuntu_64",
+    "guest_os_type": "Linux26_64",
+    "headless": false,
+
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--vram", "32"],
       ["modifyvm", "{{.Name}}", "--cpus", "2"],
@@ -21,41 +22,57 @@
       ["modifyvm", "{{.Name}}", "--nictype2", "virtio"]
     ],
 
-    "disk_size" : 24576,
+    "disk_size" : 81920,
 
-    "iso_url": "http://releases.ubuntu.com/14.04/ubuntu-14.04.4-server-amd64.iso",
-    "iso_checksum": "2ac1f3e0de626e54d05065d6f549fa3a",
-    "iso_checksum_type": "md5",
+    "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.6/releases/x86_64/alpine-virt-3.6.2-x86_64.iso",
+    "iso_checksum": "92c80e151143da155fb99611ed8f0f3672fba4de228a85eb5f53bcb261bf4b0a",
+    "iso_checksum_type": "sha256",
 
     "http_directory" : "support",
     "http_port_min" : 10000,
     "http_port_max" : 20000,
 
-    "ssh_username": "{{user `ssh_name`}}",
-    "ssh_password": "{{user `ssh_pass`}}",
+    "ssh_username": "root",
+    "ssh_password": "substance",
     "ssh_wait_timeout": "20m",
     "ssh_pty": true,
 
-    "shutdown_command": "echo {{user `ssh_pass`}} | sudo -S shutdown -P now",
+    "shutdown_command": "/sbin/poweroff",
+    "post_shutdown_delay": "20s",
+    
+    "guest_additions_mode": "disable",
 
-    "guest_additions_mode": "attach",
-
+    "boot_wait": "30s",
     "boot_command" : [
-      "<esc><f4><down><down><down><wait><enter><wait><esc><enter><wait>",
-      "/install/vmlinuz noapic ",
-      "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
-      "debian-installer=en_US auto locale=en_US kbd-chooser/method=us ",
-      "hostname={{user `hostname`}} ",
-      "fb=false debconf/frontend=noninteractive ",
-      "keyboard-configuration/modelcode=SKIP keyboard-configuration/layout=USA ",
-      "keyboard-configuration/variant=USA console-setup/ask_detect=false ",
-      "initrd=/install/initrd.gz -- <enter>"
+      "root<enter><wait>",
+      "ifconfig eth0 up && udhcpc -i eth0<enter><wait10>",
+      "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/alpine-answers<enter><wait>",
+      "setup-alpine -f alpine-answers<enter><wait5>",
+      "substance<enter><wait>",
+      "substance<enter><wait>",
+      "<wait10><wait10><wait10>",
+      "y<enter>",
+      "<wait10><wait10><wait10>",
+      "<wait10><wait10><wait10>",
+      "rc-service sshd stop<enter>",
+      "mount /dev/sda3 /mnt<enter>",
+      "echo 'PermitRootLogin yes' >> /mnt/etc/ssh/sshd_config<enter>",
+      "umount /mnt<enter>",
+      "reboot<enter>"
     ]
   }],
 
   "provisioners": [{  
     "type": "shell",
-    "scripts": ["scripts/upgrade-salt.sh", "scripts/cleanup.sh", "scripts/compress.sh" ],
-    "execute_command": " echo {{user `ssh_pass`}} | {{.Vars}} sudo -S -E bash '{{.Path}}'"
+    "scripts": [
+      "scripts/alpine/base.sh", 
+      "scripts/alpine/apk.sh", 
+      "scripts/alpine/ssh.sh", 
+      "scripts/alpine/sysctl.sh", 
+      "scripts/alpine/virtualbox.sh",
+      "scripts/alpine/compress.sh"
+    ],
+
+    "execute_command": "/bin/sh '{{.Path}}'"
   }]
 }
