@@ -10,6 +10,8 @@ DOCKER_HOST="tcp://127.0.0.1:2375"
 EOFPROFILE
 chown -R substance:substance /substance/.profile
 
+mkdir -p /substance/.cache && chown -R substance:substance /substance/.cache
+
 mkdir -p /substance/devroot
 chown -R substance:substance /substance/devroot
 
