@@ -17,7 +17,7 @@ source /etc/os-release
 
 cat << EOF > /etc/motd
 
-Substance ($PRETTY_NAME $VERSION_ID) Development Environment
+Substance ($PRETTY_NAME) Development Environment
             _                                        
            | |           _                           
   ___ _   _| |__   ___ _| |_ _____ ____   ____ _____ 

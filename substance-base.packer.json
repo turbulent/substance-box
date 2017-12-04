@@ -24,8 +24,8 @@
 
     "disk_size" : 81920,
 
-    "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.6/releases/x86_64/alpine-virt-3.6.2-x86_64.iso",
-    "iso_checksum": "92c80e151143da155fb99611ed8f0f3672fba4de228a85eb5f53bcb261bf4b0a",
+    "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.7/releases/x86_64/alpine-virt-3.7.0-x86_64.iso",
+    "iso_checksum": "5a4b2588afd32e7024dd61d9558b77b03a4f3189cb4c9fc05e9e944fb780acdd",
     "iso_checksum_type": "sha256",
 
     "http_directory" : "support",
@@ -47,7 +47,7 @@
       "root<enter><wait>",
       "ifconfig eth0 up && udhcpc -i eth0<enter><wait10>",
       "wget http://{{ .HTTPIP }}:{{ .HTTPPort }}/alpine-answers<enter><wait>",
-      "setup-alpine -f alpine-answers<enter><wait5>",
+      "setup-alpine -f ./alpine-answers<enter><wait5>",
       "substance<enter><wait>",
       "substance<enter><wait>",
       "<wait10><wait10><wait10>",

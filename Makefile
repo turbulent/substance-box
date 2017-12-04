@@ -1,7 +1,7 @@
 
 BOX_NS = turbulent
 BOX_NAME = substance-box
-BOX_VERSION = 0.7
+BOX_VERSION = 0.8
 
 BINTRAY_USERNAME = turbulent-oss
 
