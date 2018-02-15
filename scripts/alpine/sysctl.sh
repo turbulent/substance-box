@@ -25,5 +25,6 @@ fs.inotify.max_user_watches=524288
 fs.inotify.max_user_instances=1024
 kernel.grsecurity.chroot_deny_mknod=0
 kernel.grsecurity.chroot_deny_chmod=0
+kernel.grsecurity.chroot_findtask=0
 kernel.pax.softmode=1
 EOF
