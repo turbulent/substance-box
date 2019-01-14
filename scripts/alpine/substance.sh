@@ -25,5 +25,6 @@ mkdir -p /substance/devroot
 echo "Defaults env_keep += SSH_AUTH_SOCK" >> /etc/sudoers
 echo "substance ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/substance
 
-pip install git+https://github.com/turbulent/dockwrkr.git@1.2.2
-pip install git+https://github.com/turbulent/substance.git@0.15.0
+pip3 install -U pip
+pip3 install git+https://github.com/turbulent/dockwrkr.git@rel/2.0.dev
+pip3 install git+https://github.com/turbulent/substance.git@rel/1.0.dev

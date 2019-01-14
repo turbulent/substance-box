@@ -39,7 +39,7 @@
 
     "shutdown_command": "/sbin/poweroff",
     "post_shutdown_delay": "20s",
-    
+
     "guest_additions_mode": "disable",
 
     "boot_wait": "30s",
@@ -62,13 +62,13 @@
     ]
   }],
 
-  "provisioners": [{  
+  "provisioners": [{
     "type": "shell",
     "scripts": [
-      "scripts/alpine/base.sh", 
-      "scripts/alpine/apk.sh", 
-      "scripts/alpine/ssh.sh", 
-      "scripts/alpine/sysctl.sh", 
+      "scripts/alpine/base.sh",
+      "scripts/alpine/apk.sh",
+      "scripts/alpine/ssh.sh",
+      "scripts/alpine/sysctl.sh",
       "scripts/alpine/virtualbox.sh",
       "scripts/alpine/compress.sh"
     ],

@@ -1,5 +1,6 @@
 cat << EOF > /etc/sysctl.conf
 vm.swappiness=10
+vm.overcommit_memory=1
 net.core.rmem_max=8388608
 net.core.wmem_max=8388608
 net.core.rmem_default=65536

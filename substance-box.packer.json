@@ -12,7 +12,7 @@
     "headless": false,
 
     "source_path": "build/substance-base/substance-base.ovf",
-    
+
     "http_directory" : "support",
     "http_port_min" : 10000,
     "http_port_max" : 20000,
@@ -27,17 +27,16 @@
     "guest_additions_mode": "disable"
 
   }],
-  "provisioners": [{  
+  "provisioners": [{
     "type": "shell",
     "scripts": [
       "scripts/alpine/apk.sh",
       "scripts/alpine/packages.sh",
       "scripts/alpine/docker.sh",
-      "scripts/alpine/substance.sh", 
-      "scripts/alpine/unison.sh", 
+      "scripts/alpine/unison.sh",
+      "scripts/alpine/substance.sh",
       "scripts/alpine/compress.sh"
     ],
-
-    "execute_command": "/bin/sh '{{.Path}}'"
+    "execute_command": "{{ .Vars }} /bin/sh '{{.Path}}'"
   }]
 }

@@ -1,7 +1,7 @@
 
 BOX_NS = turbulent
 BOX_NAME = substance-box
-BOX_VERSION = 0.8
+BOX_VERSION = 1.0
 
 BINTRAY_USERNAME = turbulent-oss
 
@@ -53,11 +53,11 @@ build/$(BOX_NAME)-$(BOX_VERSION).json: support/boxjson.m4 build/$(BOX_NAME)-$(BO
 		-DBOX_VERSION="$(BOX_VERSION)" \
 		-DBOX_SHA="$(BOX_SHA)" \
 		support/boxjson.m4 > build/substance-box-$(BOX_VERSION).json
-  
+
 .PHONY: upload
 upload:
-	$(CURL) -T build/$(BOX_NAME)-$(BOX_VERSION).box -u$(BINTRAY_USERNAME):$(BINTRAY_APIKEY) 'https://api.bintray.com/content/turbulent/substance-images/$(BOX_NAME)/$(BOX_VERSION)/$(BOX_NS)/$(BOX_NAME)/$(BOX_VERSION).box?box_provider=virtualbox'
-	$(CURL) -T build/$(BOX_NAME)-$(BOX_VERSION).json -u$(BINTRAY_USERNAME):$(BINTRAY_APIKEY) 'https://api.bintray.com/content/turbulent/substance-images/$(BOX_NAME)/$(BOX_VERSION)/$(BOX_NS)/$(BOX_NAME)/$(BOX_VERSION).json?box_provider=virtualbox'
+	$(CURL) --progress-bar -T build/$(BOX_NAME)-$(BOX_VERSION).box -u$(BINTRAY_USERNAME):$(BINTRAY_APIKEY) 'https://api.bintray.com/content/turbulent/substance-images/$(BOX_NAME)/$(BOX_VERSION)/$(BOX_NS)/$(BOX_NAME)/$(BOX_VERSION).box?box_provider=virtualbox'
+	$(CURL) --progress-bar -T build/$(BOX_NAME)-$(BOX_VERSION).json -u$(BINTRAY_USERNAME):$(BINTRAY_APIKEY) 'https://api.bintray.com/content/turbulent/substance-images/$(BOX_NAME)/$(BOX_VERSION)/$(BOX_NS)/$(BOX_NAME)/$(BOX_VERSION).json?box_provider=virtualbox'
 
 
 .PHONY: clean
