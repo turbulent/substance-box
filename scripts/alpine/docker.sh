@@ -9,3 +9,5 @@ EOF
 
 service docker restart
 sleep 5
+
+pip3 install docker-compose
