@@ -10,7 +10,7 @@
     "virtualbox_version_file": ".vbox_version",
 
     "guest_os_type": "Linux26_64",
-    "headless": false,
+    "headless": true,
 
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--vram", "32"],
@@ -24,8 +24,8 @@
 
     "disk_size" : 81920,
 
-    "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.7/releases/x86_64/alpine-virt-3.7.0-x86_64.iso",
-    "iso_checksum": "5a4b2588afd32e7024dd61d9558b77b03a4f3189cb4c9fc05e9e944fb780acdd",
+    "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.10/releases/x86_64/alpine-virt-3.10.2-x86_64.iso",
+    "iso_checksum": "06eab9a4d3ce28ce31d413b78b6ff94285e432179b6a6cba711e6c6653667567",
     "iso_checksum_type": "sha256",
 
     "http_directory" : "support",
