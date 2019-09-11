@@ -37,7 +37,7 @@ build/$(BOX_NAME)-$(BOX_VERSION).box: build/$(BOX_NAME)/substance-box-disk001.vm
 	@echo "$$BOXYML" > build/box.yml
 	@cp build/$(BOX_NAME)/substance-box.ovf build/box.ovf
 	@cp build/$(BOX_NAME)/substance-box-disk001.vmdk build/box-disk1.vmdk
-	@sed -i '.bak' 's/substance-box-disk001.vmdk/box-disk1.vmdk/g' build/box.ovf
+	@sed -i 's/substance-box-disk001.vmdk/box-disk1.vmdk/g' build/box.ovf
 	@cd build && \
 		tar cvzf $(BOX_NAME)-$(BOX_VERSION).box box.yml box.ovf box-disk1.vmdk && \
 	  cd -
@@ -63,4 +63,3 @@ upload:
 .PHONY: clean
 clean:
 	rm -rf build/*
-
