@@ -10,7 +10,7 @@
     "virtualbox_version_file": ".vbox_version",
 
     "guest_os_type": "Linux26_64",
-    "headless": false,
+    "headless": true,
 
     "vboxmanage": [
       ["modifyvm", "{{.Name}}", "--vram", "32"],
