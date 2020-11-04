@@ -26,5 +26,5 @@ echo "Defaults env_keep += SSH_AUTH_SOCK" >> /etc/sudoers
 echo "substance ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/substance
 
 pip3 install -U pip
-pip3 install git+https://github.com/turbulent/dockwrkr.git@2.0.4
-pip3 install git+https://github.com/turbulent/substance.git@1.1.0
+pip3 install dockwrkr==2.0.7
+pip3 install substance==1.1.0

@@ -25,8 +25,7 @@
     "disk_size" : 81920,
 
     "iso_url": "http://dl-cdn.alpinelinux.org/alpine/v3.10/releases/x86_64/alpine-virt-3.10.2-x86_64.iso",
-    "iso_checksum": "06eab9a4d3ce28ce31d413b78b6ff94285e432179b6a6cba711e6c6653667567",
-    "iso_checksum_type": "sha256",
+    "iso_checksum": "sha256:06eab9a4d3ce28ce31d413b78b6ff94285e432179b6a6cba711e6c6653667567",
 
     "http_directory" : "support",
     "http_port_min" : 10000,
